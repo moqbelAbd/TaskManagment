@@ -1,14 +1,14 @@
 package com.example.taskmanager.config
 
-import com.example.taskmanager.db.model.State
-import com.example.taskmanager.repository.StateRepository
+import com.example.taskmanager.db.model.Status
+import com.example.taskmanager.repository.StatusRepository
 import jakarta.annotation.PostConstruct
 import org.springframework.stereotype.Component
 
 
 @Component
 class DataInitializer(
-    private val stateRepository: StateRepository,
+    private val statusRepository: StatusRepository,
 //    private val roleTypeRepository: RoleTypeRepository,
 
 ) {
@@ -20,7 +20,7 @@ class DataInitializer(
     }
 
     private fun seedStates() {
-        val existingStates = stateRepository.findAll().map { it.state }.toSet()
+        val existingStates = statusRepository.findAll().map { it.status }.toSet()
 
         val statesToInsert = listOf(
             "PENDING",
@@ -28,11 +28,11 @@ class DataInitializer(
             "DONE"
         ).filter { it !in existingStates }
 
-        val newStates = statesToInsert.map { State(state = it) }
+        val newStatuses = statesToInsert.map { Status(status = it) }
 
-        if (newStates.isNotEmpty()) {
-            stateRepository.saveAll(newStates)
-            newStates.forEach { println("Seeded state: ${it.state}") }
+        if (newStatuses.isNotEmpty()) {
+            statusRepository.saveAll(newStatuses)
+            newStatuses.forEach { println("Seeded state: ${it.status}") }
         }
     }
 

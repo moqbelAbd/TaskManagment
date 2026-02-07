@@ -13,10 +13,10 @@ import java.time.LocalDate
 data class Project(
 
     @Id
-    @Column(name = "project_id", nullable = false)
+    @Column(name = "project_id", nullable = false )
     val projectId: UUID,
 
-     @Column (nullable = false)
+     @Column (nullable = false ,unique = true)
      @field:NotBlank(message = "Enter project name")
      var projectName: String,
 
@@ -25,4 +25,10 @@ data class Project(
 
      @Column
      var startDate: LocalDate? = null,
+
+    @Column(name = "owner_id", nullable = false) // Added Owner ID
+    var ownerId: UUID,
+
+    @OneToMany(mappedBy = "project", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val tasks: MutableList<Task> = mutableListOf()
     )

@@ -24,6 +24,6 @@ data class User(
 
     @Column(nullable = false)
     @field:NotBlank(message = "Enter your password")
-    var userPassword: String,
+    var userPassword: String?,
 
     )
